@@ -17,11 +17,6 @@
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem(THEME_KEY, theme);
         updateToggleUI(theme);
-        
-        // Re-render chart colors if charts exist
-        if (window.renderHomeScaleChart) {
-            window.renderHomeScaleChart();
-        }
     }
 
     function updateToggleUI(theme) {

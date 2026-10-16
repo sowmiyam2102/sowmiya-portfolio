@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     prepareProjectsData();
 
     initNavigation();
-    initClock();
 
+    renderFeaturedProjects();
     renderProjects('all');
     renderSkillsMatrix();
 
@@ -295,7 +295,6 @@ function switchTab(tabId) {
             about: 'About Analyst',
             projects: 'Analytics Projects',
             experience: 'Work Experience',
-            workflow: 'Data Analytics Workflow',
             skills: 'Skills Matrix',
             education: 'Education',
             certifications: 'Certifications',
@@ -324,25 +323,8 @@ function switchTab(tabId) {
     }
 
 
-    /* Close mobile menu */
-
-    const sidebar =
-        document.getElementById(
-            'appSidebar'
-        );
-
-    if (
-        sidebar &&
-        sidebar.classList.contains(
-            'mobile-open'
-        )
-    ) {
-
-        sidebar.classList.remove(
-            'mobile-open'
-        );
-
-    }
+    /* Close mobile menu drawer if open */
+    closeMobileMenu();
 
 }
 
@@ -924,46 +906,53 @@ function renderSkillsMatrix() {
 
 
 /* ==========================================================================
-   LIVE CLOCK
+   FEATURED PROJECTS (HOME DASHBOARD)
    ========================================================================== */
 
-function initClock() {
+function renderFeaturedProjects() {
 
-    const clockEl =
+    const container =
         document.getElementById(
-            'clockTime'
+            'featuredProjectsGrid'
         );
 
-    if (!clockEl) {
+    if (!container) {
         return;
     }
 
+    const featuredProjects =
+        Array.isArray(PORTFOLIO_DATA.projects)
+            ? PORTFOLIO_DATA.projects
+            : [];
 
-    function update() {
-
-        const now =
-            new Date();
-
-
-        clockEl.textContent =
-            now.toLocaleTimeString(
-                'en-US',
-                {
-                    hour12: false
-                }
-            );
-
-    }
-
-
-    update();
-
-    setInterval(
-        update,
-        1000
-    );
+    container.innerHTML =
+        featuredProjects
+            .map(p => createProjectCard(p))
+            .join('');
 
 }
+
+/* ==========================================================================
+   NAVIGATION HELPER: GO TO PROJECT & OPEN MODAL
+   ========================================================================== */
+
+function goToProject(projectId) {
+    if (typeof switchTab === 'function') {
+        switchTab('projects');
+    }
+
+    setTimeout(() => {
+        const card = document.querySelector(`.project-card[data-id="${projectId}"]`);
+        if (card) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        if (typeof openProjectModal === 'function') {
+            openProjectModal(projectId);
+        }
+    }, 150);
+}
+
+window.goToProject = goToProject;
 
 
 /* ==========================================================================
@@ -1304,41 +1293,94 @@ function initSearchFilter() {
 
 
 /* ==========================================================================
-   MOBILE MENU
+   MOBILE MENU & NAVIGATION DRAWER
    ========================================================================== */
 
+function isMobileMenuOpen() {
+    const sidebar = document.getElementById('appSidebar');
+    return sidebar && sidebar.classList.contains('mobile-open');
+}
+
+function openMobileMenu() {
+    const sidebar = document.getElementById('appSidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const toggleBtn = document.getElementById('mobileMenuToggle');
+
+    if (sidebar) {
+        sidebar.classList.add('mobile-open');
+    }
+    if (overlay) {
+        overlay.classList.add('active');
+    }
+    if (toggleBtn) {
+        toggleBtn.setAttribute('aria-expanded', 'true');
+    }
+    document.body.classList.add('nav-drawer-open');
+}
+
+function closeMobileMenu() {
+    const sidebar = document.getElementById('appSidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const toggleBtn = document.getElementById('mobileMenuToggle');
+
+    if (sidebar && sidebar.classList.contains('mobile-open')) {
+        sidebar.classList.remove('mobile-open');
+    }
+    if (overlay && overlay.classList.contains('active')) {
+        overlay.classList.remove('active');
+    }
+    if (toggleBtn) {
+        toggleBtn.setAttribute('aria-expanded', 'false');
+    }
+    document.body.classList.remove('nav-drawer-open');
+}
+
 function initMobileMenu() {
+    const toggleBtn = document.getElementById('mobileMenuToggle');
+    const closeBtn = document.getElementById('sidebarCloseBtn');
+    const overlay = document.getElementById('sidebarOverlay');
 
-    const toggleBtn =
-        document.getElementById(
-            'mobileMenuToggle'
-        );
-
-    const sidebar =
-        document.getElementById(
-            'appSidebar'
-        );
-
-
-    if (
-        toggleBtn &&
-        sidebar
-    ) {
-
-        toggleBtn.addEventListener(
-            'click',
-            () => {
-
-                sidebar.classList.toggle(
-                    'mobile-open'
-                );
-
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (isMobileMenuOpen()) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
             }
-        );
-
+        });
     }
 
+    if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeMobileMenu();
+        });
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', () => {
+            closeMobileMenu();
+        });
+    }
+
+    /* Close drawer on Escape key */
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isMobileMenuOpen()) {
+            closeMobileMenu();
+        }
+    });
+
+    /* Close drawer when window resizes to desktop */
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && isMobileMenuOpen()) {
+            closeMobileMenu();
+        }
+    });
 }
+
+window.openMobileMenu = openMobileMenu;
+window.closeMobileMenu = closeMobileMenu;
 
 
 /* ==========================================================================

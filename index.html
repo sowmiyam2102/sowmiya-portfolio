@@ -38,11 +38,18 @@
 
     <!-- MOBILE HEADER -->
     <header class="mobile-header">
-        <div class="mobile-brand">
-            <div class="brand-avatar-sm">SM</div>
-            <div class="brand-title">
-                <span class="name">SOWMIYA M</span>
-                <span class="role">DATA ANALYST</span>
+        <div class="mobile-header-brand-wrap">
+            <button id="mobileMenuToggle" class="icon-btn hamburger-btn" aria-label="Open Navigation Menu" aria-expanded="false" aria-controls="appSidebar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12h18M3 6h18M3 18h18" />
+                </svg>
+            </button>
+            <div class="mobile-brand">
+                <div class="brand-avatar-sm">SM</div>
+                <div class="brand-title">
+                    <span class="name">SOWMIYA M</span>
+                    <span class="role">DATA ANALYST</span>
+                </div>
             </div>
         </div>
         <div class="mobile-actions">
@@ -54,11 +61,6 @@
                 </svg>
                 <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                </svg>
-            </button>
-            <button id="mobileMenuToggle" class="icon-btn" aria-label="Open Navigation Menu">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 12h18M3 6h18M3 18h18" />
                 </svg>
             </button>
         </div>
@@ -84,6 +86,12 @@
                     </div>
                 </div>
             </div>
+            <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close Navigation Menu">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
         </div>
 
         <div class="sidebar-nav-container">
@@ -118,12 +126,6 @@
                         <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
                     </svg>
                     <span>Experience</span>
-                </button>
-                <button class="nav-item" data-tab="workflow" role="tab" aria-selected="false">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-                    </svg>
-                    <span>Data Workflow</span>
                 </button>
                 <button class="nav-item" data-tab="skills" role="tab" aria-selected="false">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -224,6 +226,7 @@
             </div>
         </div>
     </aside>
+    <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
 
     <!-- MAIN DASHBOARD CONTENT AREA -->
     <main class="app-main">
@@ -254,14 +257,6 @@
                     <span class="pulse-dot"></span>
                     <span>Open to Opportunities</span>
                 </div>
-
-                <div class="time-widget" id="liveClock" title="Local System Time">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10" />
-                        <polyline points="12 6 12 12 16 14" />
-                    </svg>
-                    <span id="clockTime">--:--:--</span>
-                </div>
             </div>
         </header>
 
@@ -272,88 +267,12 @@
             <section class="view-panel active" id="view-home" role="tabpanel">
                 <div class="dashboard-grid">
 
-                    <!-- KPI ROW (VERIFIED NUMBERS ONLY) -->
-                    <div class="kpi-banner">
-                        <div class="kpi-card" data-metric="60000">
-                            <div class="kpi-icon-box blue">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <ellipse cx="12" cy="5" rx="9" ry="3" />
-                                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-                                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-                                </svg>
-                            </div>
-                            <div class="kpi-info">
-                                <div class="kpi-value">60,000+</div>
-                                <div class="kpi-label">Records Processed</div>
-                                <div class="kpi-subtext">HR, Retail & Banking Datasets</div>
-                            </div>
-                        </div>
-
-                        <div class="kpi-card" data-metric="6">
-                            <div class="kpi-icon-box cyan">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="3" y="3" width="18" height="18" rx="2" />
-                                    <path d="M3 9h18" />
-                                    <path d="M9 21V9" />
-                                </svg>
-                            </div>
-                            <div class="kpi-info">
-                                <div class="kpi-value">6+</div>
-                                <div class="kpi-label">Interactive Dashboards</div>
-                                <div class="kpi-subtext">Power BI & Tableau Platforms</div>
-                            </div>
-                        </div>
-
-                        <div class="kpi-card" data-metric="40">
-                            <div class="kpi-icon-box purple">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
-                                    <line x1="4" y1="22" x2="4" y2="15" />
-                                </svg>
-                            </div>
-                            <div class="kpi-info">
-                                <div class="kpi-value">40+</div>
-                                <div class="kpi-label">RBI Datasets Analyzed</div>
-                                <div class="kpi-subtext">Transactions & Digital Adoption</div>
-                            </div>
-                        </div>
-
-                        <div class="kpi-card" data-metric="50">
-                            <div class="kpi-icon-box emerald">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3" />
-                                </svg>
-                            </div>
-                            <div class="kpi-info">
-                                <div class="kpi-value">50+</div>
-                                <div class="kpi-label">Banks Covered</div>
-                                <div class="kpi-subtext">Performance & Channel Benchmarking</div>
-                            </div>
-                        </div>
-
-                        <div class="kpi-card" data-metric="30000">
-                            <div class="kpi-icon-box amber">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-                                    <line x1="3" y1="6" x2="21" y2="6" />
-                                    <path d="M16 10a4 4 0 0 1-8 0" />
-                                </svg>
-                            </div>
-                            <div class="kpi-info">
-                                <div class="kpi-value">30,000+</div>
-                                <div class="kpi-label">Retail Records</div>
-                                <div class="kpi-subtext">Sales Trends & Demand Forecasting</div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- HERO ROW -->
                     <div class="hero-widget-row">
                         <!-- HERO MAIN CARD -->
                         <div class="dash-card hero-card">
                             <div class="card-header-flex">
                                 <div class="pill-tag">DATA ANALYST PORTFOLIO</div>
-                                <!-- <span class="timestamp-tag">Verified Resume Data</span> -->
                             </div>
 
                             <h2 class="hero-title">Hi, I'm <span class="highlight-text">SOWMIYA M</span></h2>
@@ -417,7 +336,6 @@
                                     <div class="avatar-info">
                                         <span class="avatar-name">SOWMIYA M</span>
                                         <span class="avatar-role">Data Analyst</span>
-                                        <!-- <span class="avatar-badge">Verified Credentials</span> -->
                                     </div>
                                 </div>
 
@@ -448,13 +366,12 @@
                         </div>
                     </div>
 
-                    <!-- ANALYTICS STACK & QUICK METRICS ROW -->
+                    <!-- ANALYTICS STACK & FEATURED PROJECTS ROW (EXACTLY AS PREVIOUS, REPLACING CHART) -->
                     <div class="dashboard-row-2">
                         <!-- STACK WIDGET -->
                         <div class="dash-card stack-widget">
                             <div class="card-title-bar">
                                 <h3>Analytics Stack</h3>
-                                <!-- <span class="card-subtitle">Verified Core Competencies</span> -->
                             </div>
                             <div class="tech-grid">
                                 <div class="tech-badge-card"><span class="tech-icon">📊</span><span
@@ -479,17 +396,82 @@
                                         class="tech-name">Power Query</span></div>
                                 <div class="tech-badge-card"><span class="tech-icon">📐</span><span
                                         class="tech-name">DAX</span></div>
+                                <div class="tech-badge-card"><span class="tech-icon">🐳</span><span
+                                        class="tech-name">Docker</span></div>
                             </div>
                         </div>
 
-                        <!-- INTERACTIVE CHART SUMMARY WIDGET -->
-                        <div class="dash-card chart-widget">
+                        <!-- FEATURED PROJECTS IN THREE ROWS COVERING CHART PLACE -->
+                        <div class="dash-card featured-widget">
                             <div class="card-title-bar">
-                                <h3>Data Scale Distribution</h3>
-                                <span class="card-subtitle">Project Scale by Domain</span>
+                                <div>
+                                    <h3>Featured Projects</h3>
+                                    <span class="card-subtitle">Click to open project</span>
+                                </div>
+                                <button class="btn btn-outline btn-sm" onclick="switchTab('projects')">All Projects (7) →</button>
                             </div>
-                            <div class="chart-container" id="homeScaleChart">
-                                <!-- Rendered via charts.js -->
+                            <div class="featured-rows-container">
+                                <div class="featured-project-row" onclick="goToProject('proj-1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goToProject('proj-1');}" role="button" tabindex="0" title="Click to view Crypto project">
+                                    <div class="featured-row-thumb">
+                                        <img src="assets/components/crypto/image.png" alt="Crypto Data Pipeline" class="featured-row-img" onerror="this.parentElement.innerHTML='<span class=\'thumb-fallback\'>🪙</span>'">
+                                    </div>
+                                    <div class="featured-row-info">
+                                        <div class="featured-row-top">
+                                            <span class="featured-row-cat">Data Pipeline & ML</span>
+                                            <span class="featured-row-arrow">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                            </span>
+                                        </div>
+                                        <h4 class="featured-row-title">Crypto Data Pipeline & Power BI Dashboard</h4>
+                                        <div class="featured-row-tech">
+                                            <span>Python</span>
+                                            <span>PostgreSQL</span>
+                                            <span>Airflow</span>
+                                            <span>Power BI</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="featured-project-row" onclick="goToProject('proj-2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goToProject('proj-2');}" role="button" tabindex="0" title="Click to view Banking project">
+                                    <div class="featured-row-thumb">
+                                        <img src="assets/components/bank/bank1.png" alt="Banking Systems Dashboard" class="featured-row-img" onerror="this.parentElement.innerHTML='<span class=\'thumb-fallback\'>🏦</span>'">
+                                    </div>
+                                    <div class="featured-row-info">
+                                        <div class="featured-row-top">
+                                            <span class="featured-row-cat">Banking BI</span>
+                                            <span class="featured-row-arrow">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                            </span>
+                                        </div>
+                                        <h4 class="featured-row-title">Banking Systems & Performance Analysis Dashboard</h4>
+                                        <div class="featured-row-tech">
+                                            <span>Tableau</span>
+                                            <span>Tableau Prep</span>
+                                            <span>SQL</span>
+                                            <span>Excel</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="featured-project-row" onclick="goToProject('proj-3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goToProject('proj-3');}" role="button" tabindex="0" title="Click to view Retail project">
+                                    <div class="featured-row-thumb">
+                                        <img src="assets/components/retail/retail1.png" alt="Retail Industry Dashboard" class="featured-row-img" onerror="this.parentElement.innerHTML='<span class=\'thumb-fallback\'>🛍️</span>'">
+                                    </div>
+                                    <div class="featured-row-info">
+                                        <div class="featured-row-top">
+                                            <span class="featured-row-cat">Retail & Demand</span>
+                                            <span class="featured-row-arrow">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                            </span>
+                                        </div>
+                                        <h4 class="featured-row-title">Retail Industry Dashboard</h4>
+                                        <div class="featured-row-tech">
+                                            <span>Power BI</span>
+                                            <span>MySQL</span>
+                                            <span>Python</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -662,69 +644,6 @@
                 </div>
             </section>
 
-            <!-- ================= VIEW 5: WORKFLOW ================= -->
-            <section class="view-panel" id="view-workflow" role="tabpanel">
-                <div class="single-view-container">
-                    <div class="dash-card">
-                        <div class="card-title-bar">
-                            <h2>My Data Analytics Workflow</h2>
-                            <span class="card-subtitle">End-to-End Analytics Pipeline</span>
-                        </div>
-
-                        <div class="workflow-pipeline-grid">
-                            <div class="workflow-step-card">
-                                <div class="step-num">01</div>
-                                <div class="step-title">Understand</div>
-                                <div class="step-desc">Understand the business question and analytical objective.</div>
-                            </div>
-                            <div class="workflow-arrow">→</div>
-
-                            <div class="workflow-step-card">
-                                <div class="step-num">02</div>
-                                <div class="step-title">Extract</div>
-                                <div class="step-desc">Collect and access relevant data.</div>
-                            </div>
-                            <div class="workflow-arrow">→</div>
-
-                            <div class="workflow-step-card">
-                                <div class="step-num">03</div>
-                                <div class="step-title">Clean</div>
-                                <div class="step-desc">Identify missing values, inconsistencies, duplicates, and quality
-                                    issues.</div>
-                            </div>
-                            <div class="workflow-arrow">→</div>
-
-                            <div class="workflow-step-card">
-                                <div class="step-num">04</div>
-                                <div class="step-title">Transform</div>
-                                <div class="step-desc">Prepare data using SQL, Python, Power Query, or Tableau Prep.
-                                </div>
-                            </div>
-                            <div class="workflow-arrow">→</div>
-
-                            <div class="workflow-step-card">
-                                <div class="step-num">05</div>
-                                <div class="step-title">Analyze</div>
-                                <div class="step-desc">Explore data and identify trends, patterns, and KPIs.</div>
-                            </div>
-                            <div class="workflow-arrow">→</div>
-
-                            <div class="workflow-step-card">
-                                <div class="step-num">06</div>
-                                <div class="step-title">Visualize</div>
-                                <div class="step-desc">Build dashboards using Power BI or Tableau.</div>
-                            </div>
-                            <div class="workflow-arrow">→</div>
-
-                            <div class="workflow-step-card highlight">
-                                <div class="step-num">07</div>
-                                <div class="step-title">Communicate</div>
-                                <div class="step-desc">Present insights clearly for data-driven decision-making.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             <!-- ================= VIEW 6: SKILLS ================= -->
             <section class="view-panel" id="view-skills" role="tabpanel">
@@ -1040,7 +959,6 @@
     <!-- Scripts -->
     <script src="js/data.js"></script>
     <script src="js/theme.js"></script>
-    <script src="js/charts.js"></script>
     <script src="js/modals.js"></script>
     <script src="js/app.js"></script>
 </body>

@@ -1,19 +1,17 @@
 /* ==========================================================================
-   RESPONSIVE BREAKPOINTS & MOBILE DASHBOARD LAYOUT
+   RESPONSIVE BREAKPOINTS & MOBILE-OPTIMIZED DASHBOARD LAYOUT
+   Tested and tailored for: 320px, 360px, 375px, 390px, 430px, 768px, 1024px+
    ========================================================================== */
 
-/* TABLET & MEDIUM SCREENS */
+/* TABLETS & MEDIUM SCREENS (<= 1200px) */
 @media (max-width: 1200px) {
-    .kpi-banner {
+    .featured-projects-grid {
         grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .hero-widget-row {
-        grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
-    .dashboard-row-2 {
-        grid-template-columns: 1fr;
+    .home-secondary-row {
+        grid-template-columns: 1fr 1fr;
     }
 
     .projects-grid {
@@ -29,11 +27,31 @@
     }
 }
 
-@media (max-width: 900px) {
-    .kpi-banner {
+/* TABLETS LANDSCAPE (<= 1024px) */
+@media (max-width: 1024px) {
+    .hero-widget-row {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-row-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-projects-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
+    .home-secondary-row {
+        grid-template-columns: 1fr;
+    }
+
+    .home-tertiary-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* TABLETS PORTRAIT (<= 900px) */
+@media (max-width: 900px) {
     .about-content-grid {
         grid-template-columns: 1fr;
     }
@@ -51,20 +69,48 @@
     }
 }
 
-/* MOBILE DEVICES (< 768px) */
+/* ==========================================================================
+   MOBILE DEVICES (<= 768px)
+   ========================================================================== */
 @media (max-width: 768px) {
     html, body {
-        overflow: auto; /* Controlled mobile scrolling */
+        overflow-x: hidden;
+        overflow-y: auto; /* Natural, smooth native mobile scrolling */
+        height: auto;
+        min-height: 100%;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    body.nav-drawer-open {
+        overflow: hidden !important;
+        touch-action: none;
     }
 
     .app-container {
         flex-direction: column;
         height: auto;
         min-height: 100vh;
-        overflow: visible;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
     }
 
-    /* SHOW MOBILE HEADER */
+    .app-main {
+        height: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .dashboard-body {
+        overflow-x: hidden;
+        overflow-y: visible;
+        height: auto;
+        padding: 1rem 0.85rem;
+    }
+
+    /* COMPACT MOBILE HEADER (Sticky Top Bar) */
     .mobile-header {
         display: flex;
         align-items: center;
@@ -76,17 +122,28 @@
         position: sticky;
         top: 0;
         z-index: 1000;
+        width: 100%;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .mobile-header-brand-wrap {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        min-width: 0;
     }
 
     .mobile-brand {
         display: flex;
         align-items: center;
         gap: 0.65rem;
+        min-width: 0;
     }
 
     .brand-avatar-sm {
         width: 32px;
         height: 32px;
+        min-width: 32px;
         border-radius: 8px;
         background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
         color: #FFFFFF;
@@ -95,34 +152,46 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
     }
 
     .brand-title {
         display: flex;
         flex-direction: column;
+        min-width: 0;
+        overflow: hidden;
     }
 
     .brand-title .name {
         font-weight: 800;
         font-size: 0.875rem;
         color: var(--text-primary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.2;
     }
 
     .brand-title .role {
         font-size: 0.65rem;
         color: var(--accent-blue);
         font-weight: 700;
+        letter-spacing: 0.05em;
+        line-height: 1.2;
     }
 
     .mobile-actions {
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        flex-shrink: 0;
     }
 
     .icon-btn {
-        width: 36px;
-        height: 36px;
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        min-height: 38px;
         border-radius: 8px;
         background-color: var(--bg-card);
         border: 1px solid var(--border-color);
@@ -131,6 +200,12 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .icon-btn:hover {
+        background-color: var(--bg-card-hover);
+        border-color: var(--border-accent);
     }
 
     .icon-btn svg {
@@ -154,75 +229,489 @@
         color: var(--accent-blue);
     }
 
-    /* COLLAPSIBLE SIDEBAR ON MOBILE */
+    /* SLIDE-OUT NAVIGATION DRAWER ON MOBILE */
     .app-sidebar {
         position: fixed;
         top: 0;
         left: 0;
-        width: 280px;
+        width: min(300px, 86vw);
+        max-width: 320px;
+        min-width: 0;
         height: 100vh;
+        height: 100dvh;
+        max-height: 100dvh;
+        z-index: 100;
         transform: translateX(-100%);
-        box-shadow: var(--shadow-md);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: none;
+        overflow-y: auto;
+        overscroll-behavior: contain;
     }
 
     .app-sidebar.mobile-open {
         transform: translateX(0);
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.85);
     }
 
-    /* DASHBOARD HEADER ON MOBILE */
+    .sidebar-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.1rem 1.1rem 0.9rem 1.1rem;
+    }
+
+    .sidebar-close-btn {
+        display: flex;
+    }
+
+    .nav-item {
+        padding: 0.75rem 1rem;
+        min-height: 44px; /* Touch-friendly tap target */
+        font-size: 0.875rem;
+    }
+
+    .nav-item svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* SUB-HEADER (Breadcrumbs & Status) */
     .dashboard-header {
         height: auto;
-        padding: 0.85rem 1rem;
+        min-height: 42px;
+        padding: 0.6rem 1rem;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+        background-color: var(--bg-card);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .header-left .breadcrumb {
+        font-size: 0.775rem;
+    }
+
+    .header-right {
+        gap: 0.5rem;
+        justify-content: flex-end;
+    }
+
+    .status-pill {
+        padding: 0.22rem 0.6rem;
+        font-size: 0.7rem;
+        white-space: nowrap;
+    }
+
+    /* HOME DASHBOARD GRIDS */
+    .hero-widget-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .dashboard-row-2 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .home-layout {
+        gap: 1rem;
+    }
+
+    .featured-rows-container {
+        gap: 0.65rem;
+    }
+
+    .featured-project-row {
+        padding: 0.6rem 0.75rem;
+    }
+
+    .tech-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.65rem;
+    }
+
+    .featured-projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .home-secondary-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .home-tertiary-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    /* PROJECTS VIEW & PROJECT CARDS */
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .project-card {
+        padding: 1rem;
+    }
+
+    .project-image-wrapper {
+        height: 190px;
+    }
+
+    .project-card-title {
+        font-size: 1.05rem;
+    }
+
+    .project-card-desc {
+        font-size: 0.825rem;
+    }
+
+    .project-card-footer {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .project-card-footer .btn {
+        min-height: 42px; /* Touch-friendly */
+    }
+
+    .view-header-bar {
         flex-direction: column;
         align-items: stretch;
         gap: 0.75rem;
     }
 
-    .header-center {
-        max-width: 100%;
+    .project-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        width: 100%;
     }
 
-    .header-right {
-        justify-content: space-between;
+    .filter-btn {
+        flex: 1 1 calc(50% - 0.5rem);
+        text-align: center;
+        min-height: 38px;
+        padding: 0.45rem 0.65rem;
+        font-size: 0.75rem;
     }
 
-    /* KPI CARDS MOBILE */
-    .kpi-banner {
-        grid-template-columns: 1fr;
-    }
-
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-
+    /* SKILLS MATRIX & OTHER VIEWS */
     .skills-categories-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
     .certifications-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
     .contact-cards-grid {
         grid-template-columns: 1fr;
+        gap: 0.85rem;
     }
 
-    .workflow-pipeline-grid {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .workflow-arrow {
-        transform: rotate(90deg);
-        text-align: center;
-        margin: 0.25rem 0;
-    }
-
-    .modal-backdrop {
+    .contact-card {
         padding: 1rem;
     }
 
+    .contact-value {
+        word-break: break-all;
+    }
+
+    /* MODAL POPUPS */
+    .modal-backdrop {
+        padding: 0.75rem;
+    }
+
     .modal-container {
-        max-height: 90vh;
+        width: 100%;
+        max-width: 100%;
+        max-height: 92vh;
+        border-radius: 12px;
+    }
+
+    .modal-header {
+        padding: 1rem 1rem 0.75rem 1rem;
+    }
+
+    .modal-title {
+        font-size: 1.25rem;
+    }
+
+    .modal-close-btn {
+        top: 0.75rem;
+        right: 0.75rem;
+        width: 36px;
+        height: 36px;
+    }
+
+    .modal-body {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .modal-dashboard-image {
+        max-height: 250px;
+        object-fit: contain;
+    }
+
+    .modal-pipeline-box {
+        padding: 0.75rem;
+        gap: 0.5rem;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .pipeline-node {
+        min-width: 80px;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.725rem;
+    }
+
+    /* FOOTER */
+    .app-footer {
+        height: auto;
+        min-height: 52px;
+        padding: 0.85rem 1rem;
+        background-color: var(--bg-card);
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 0.35rem;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .footer-copy {
+        font-size: 0.7rem;
+        line-height: 1.4;
+    }
+}
+
+/* ==========================================================================
+   SMARTPHONES (<= 480px) - e.g. 430px, 390px, 375px
+   ========================================================================== */
+@media (max-width: 480px) {
+    .dashboard-body {
+        padding: 0.85rem 0.65rem;
+    }
+
+    .breadcrumb-root,
+    .breadcrumb-separator {
+        display: none;
+    }
+
+    .breadcrumb-active {
+        font-size: 0.8rem;
+    }
+
+    /* Hero section scaling */
+    .dash-card.hero-card {
+        padding: 1rem;
+    }
+
+    .hero-title {
+        font-size: 1.4rem;
+        line-height: 1.25;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .hero-tagline {
+        font-size: 0.875rem;
+        line-height: 1.4;
+    }
+
+    .hero-description {
+        font-size: 0.825rem;
+        line-height: 1.55;
+    }
+
+    .skill-pills-row {
+        gap: 5px;
+    }
+
+    .skill-pill {
+        padding: 0.2rem 0.5rem;
+        font-size: 0.725rem;
+    }
+
+    /* Hero buttons stack on mobile */
+    .hero-cta-row {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.6rem;
+    }
+
+    .hero-cta-row .btn {
+        width: 100%;
+        min-height: 42px;
+        justify-content: center;
+    }
+
+    /* Tech grid scaling */
+    .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.55rem;
+    }
+
+    .tech-badge-card {
+        padding: 0.6rem 0.65rem;
+        font-size: 0.8rem;
+    }
+
+    .tech-icon {
+        font-size: 1.2rem;
+    }
+
+    /* Project cards */
+    .project-image-wrapper {
+        height: 165px;
+    }
+
+    .project-card-footer {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .project-card-footer .btn {
+        width: 100%;
+    }
+
+    /* Resume action buttons */
+    .resume-actions-row {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.6rem;
+    }
+
+    .resume-actions-row .btn {
+        width: 100%;
+        min-height: 42px;
+        justify-content: center;
+    }
+
+    /* Experience section */
+    .exp-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+    }
+
+    .exp-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2rem;
+    }
+
+    .timeline-item {
+        padding-left: 1.5rem;
+    }
+
+    /* Featured Project Rows (Mobile) */
+    .featured-row-thumb {
+        width: 62px;
+        height: 44px;
+        min-width: 62px;
+    }
+
+    .featured-row-title {
+        font-size: 0.775rem;
+    }
+
+    .featured-row-tech span {
+        font-size: 0.625rem;
+        padding: 1px 5px;
+    }
+}
+
+/* ==========================================================================
+   EXTRA-NARROW SMARTPHONES (<= 360px) - e.g. 360px, 320px
+   ========================================================================== */
+@media (max-width: 360px) {
+    .dashboard-body {
+        padding: 0.65rem 0.45rem;
+    }
+
+    .mobile-header {
+        padding: 0 0.5rem;
+    }
+
+    .brand-avatar-sm {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        font-size: 0.75rem;
+    }
+
+    .brand-title .name {
+        font-size: 0.8rem;
+    }
+
+    .brand-title .role {
+        font-size: 0.6rem;
+    }
+
+    .status-pill {
+        padding: 0.18rem 0.45rem;
+        font-size: 0.65rem;
+    }
+
+    .dash-card {
+        padding: 0.85rem;
+    }
+
+    .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .filter-btn {
+        flex: 1 1 100%;
+    }
+
+    .meta-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2rem;
+    }
+
+    .meta-value {
+        text-align: left;
+    }
+
+    .modal-backdrop {
+        padding: 0.35rem;
+    }
+
+    .featured-project-row {
+        gap: 0.6rem;
+        padding: 0.45rem 0.6rem;
+    }
+
+    .featured-row-thumb {
+        width: 50px;
+        height: 38px;
+        min-width: 50px;
+    }
+
+    .featured-row-title {
+        font-size: 0.725rem;
+    }
+
+    .featured-row-cat {
+        font-size: 0.6rem;
+    }
+
+    .featured-row-tech span {
+        font-size: 0.575rem;
+        padding: 1px 4px;
     }
 }
