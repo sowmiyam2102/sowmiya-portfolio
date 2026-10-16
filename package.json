@@ -1,0 +1,21 @@
+{
+  "name": "sowmiya-data-analyst-portfolio",
+  "version": "1.0.0",
+  "description": "Data Analyst Portfolio & Interactive Analytics Dashboard for SOWMIYA M",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "keywords": [
+    "data-analyst",
+    "portfolio",
+    "dashboard",
+    "power-bi",
+    "tableau",
+    "sql",
+    "python"
+  ],
+  "author": "SOWMIYA M",
+  "license": "ISC"
+}

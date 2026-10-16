@@ -1,0 +1,228 @@
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS & MOBILE DASHBOARD LAYOUT
+   ========================================================================== */
+
+/* TABLET & MEDIUM SCREENS */
+@media (max-width: 1200px) {
+    .kpi-banner {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .hero-widget-row {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-row-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .skills-categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .contact-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .kpi-banner {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .education-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .certifications-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .achievements-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* MOBILE DEVICES (< 768px) */
+@media (max-width: 768px) {
+    html, body {
+        overflow: auto; /* Controlled mobile scrolling */
+    }
+
+    .app-container {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+    }
+
+    /* SHOW MOBILE HEADER */
+    .mobile-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 56px;
+        padding: 0 1rem;
+        background-color: var(--bg-sidebar);
+        border-bottom: 1px solid var(--border-color);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+    }
+
+    .brand-avatar-sm {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+        color: #FFFFFF;
+        font-weight: 800;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .brand-title {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .brand-title .name {
+        font-weight: 800;
+        font-size: 0.875rem;
+        color: var(--text-primary);
+    }
+
+    .brand-title .role {
+        font-size: 0.65rem;
+        color: var(--accent-blue);
+        font-weight: 700;
+    }
+
+    .mobile-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .icon-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .icon-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* Mobile theme toggle icon states */
+    [data-theme="dark"] #themeToggleMobile .moon-icon {
+        display: none;
+    }
+    [data-theme="dark"] #themeToggleMobile .sun-icon {
+        display: block;
+        color: #F59E0B;
+    }
+    [data-theme="light"] #themeToggleMobile .sun-icon {
+        display: none;
+    }
+    [data-theme="light"] #themeToggleMobile .moon-icon {
+        display: block;
+        color: var(--accent-blue);
+    }
+
+    /* COLLAPSIBLE SIDEBAR ON MOBILE */
+    .app-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100vh;
+        transform: translateX(-100%);
+        box-shadow: var(--shadow-md);
+    }
+
+    .app-sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    /* DASHBOARD HEADER ON MOBILE */
+    .dashboard-header {
+        height: auto;
+        padding: 0.85rem 1rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .header-center {
+        max-width: 100%;
+    }
+
+    .header-right {
+        justify-content: space-between;
+    }
+
+    /* KPI CARDS MOBILE */
+    .kpi-banner {
+        grid-template-columns: 1fr;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .skills-categories-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .certifications-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .workflow-pipeline-grid {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .workflow-arrow {
+        transform: rotate(90deg);
+        text-align: center;
+        margin: 0.25rem 0;
+    }
+
+    .modal-backdrop {
+        padding: 1rem;
+    }
+
+    .modal-container {
+        max-height: 90vh;
+    }
+}
