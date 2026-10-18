@@ -243,6 +243,23 @@ function prepareProjectsData() {
 
 function switchTab(tabId) {
 
+    if (!tabId) {
+        tabId = 'home';
+    }
+
+    const requestedTab = tabId;
+
+    /* Aliases for combined sections */
+    if (tabId === 'education') {
+        tabId = 'experience';
+    }
+    if (tabId === 'achievements') {
+        tabId = 'certifications';
+    }
+    if (tabId === 'contact') {
+        tabId = 'resume';
+    }
+
     const navItems =
         document.querySelectorAll('.nav-item');
 
@@ -294,13 +311,13 @@ function switchTab(tabId) {
             home: 'Executive Overview',
             about: 'About Analyst',
             projects: 'Analytics Projects',
-            experience: 'Work Experience',
+            experience: 'Experience & Education',
             skills: 'Skills Matrix',
-            education: 'Education',
-            certifications: 'Certifications',
-            achievements: 'Achievements',
-            resume: 'Resume View',
-            contact: 'Contact Me'
+            education: 'Experience & Education',
+            certifications: 'Certifications & Achievements',
+            achievements: 'Certifications & Achievements',
+            resume: 'Resume & Contact',
+            contact: 'Resume & Contact'
 
         };
 
@@ -311,7 +328,7 @@ function switchTab(tabId) {
     }
 
 
-    /* Scroll dashboard to top */
+    /* Scroll dashboard to top or to contact card if contact was requested */
 
     const dashBody =
         document.querySelector(
@@ -320,6 +337,15 @@ function switchTab(tabId) {
 
     if (dashBody) {
         dashBody.scrollTop = 0;
+    }
+
+    if (requestedTab === 'contact') {
+        setTimeout(() => {
+            const contactCard = document.getElementById('contactCard');
+            if (contactCard) {
+                contactCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 80);
     }
 
 
@@ -1088,7 +1114,7 @@ function initSearchFilter() {
 
 
             /* ================================================================
-               SEARCH EXPERIENCE
+               SEARCH EXPERIENCE & EDUCATION
                ================================================================ */
 
             let experienceMatch =
@@ -1130,6 +1156,76 @@ function initSearchFilter() {
                         }
                     );
 
+            }
+
+            if (!experienceMatch && Array.isArray(PORTFOLIO_DATA.education)) {
+                experienceMatch =
+                    PORTFOLIO_DATA.education.some(
+                        edu => {
+                            const text = [
+                                edu.degree,
+                                edu.institution,
+                                edu.location,
+                                edu.grade,
+                                'education',
+                                'college',
+                                'university'
+                            ]
+                                .filter(Boolean)
+                                .join(' ')
+                                .toLowerCase();
+
+                            return text.includes(query);
+                        }
+                    );
+            }
+
+
+            /* ================================================================
+               SEARCH CERTIFICATIONS & ACHIEVEMENTS
+               ================================================================ */
+
+            let certsMatch = false;
+
+            if (Array.isArray(PORTFOLIO_DATA.certifications)) {
+                certsMatch =
+                    PORTFOLIO_DATA.certifications.some(
+                        cert => {
+                            const text = [
+                                cert.title,
+                                cert.issuer,
+                                'certification',
+                                'certificate',
+                                'certified'
+                            ]
+                                .filter(Boolean)
+                                .join(' ')
+                                .toLowerCase();
+
+                            return text.includes(query);
+                        }
+                    );
+            }
+
+            if (!certsMatch && Array.isArray(PORTFOLIO_DATA.achievements)) {
+                certsMatch =
+                    PORTFOLIO_DATA.achievements.some(
+                        ach => {
+                            const text = [
+                                ach.title,
+                                ach.awardBadge,
+                                ach.description,
+                                'achievement',
+                                'award',
+                                'honor'
+                            ]
+                                .filter(Boolean)
+                                .join(' ')
+                                .toLowerCase();
+
+                            return text.includes(query);
+                        }
+                    );
             }
 
 
@@ -1239,13 +1335,28 @@ function initSearchFilter() {
 
 
             /* ================================================================
-               EXPERIENCE
+               EXPERIENCE & EDUCATION
                ================================================================ */
 
             if (experienceMatch) {
 
                 switchTab(
                     'experience'
+                );
+
+                return;
+
+            }
+
+
+            /* ================================================================
+               CERTIFICATIONS & ACHIEVEMENTS
+               ================================================================ */
+
+            if (certsMatch) {
+
+                switchTab(
+                    'certifications'
                 );
 
                 return;
